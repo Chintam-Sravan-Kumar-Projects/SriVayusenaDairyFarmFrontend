@@ -5,4 +5,3 @@ export  const url2 =import.meta.env.VITE_URL;
 export const url = import.meta.env.VITE_URL;
 export const localhost = import.meta.env.VITE_URL;
 
-console.log(url);
