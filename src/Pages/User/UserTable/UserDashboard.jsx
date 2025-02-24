@@ -317,7 +317,6 @@ export default function UserDashboard() {
     sortedItems,
     hasSearchFilter,
   ]);
-  console.log(customerData)
   const bottomContent = React.useMemo(() => {
     return (
       <div className="py-2 px-2 flex justify-between items-center">
@@ -358,7 +357,6 @@ export default function UserDashboard() {
   }, [selectedKeys, items.length, page, pages, hasSearchFilter]);
 
   useEffect(() => {
-    console.log("Dispatching getcustomersDetails with token:", token);
     dispatch(getcustomersDetails({ token }));
   }, [dispatch, token]);
   
