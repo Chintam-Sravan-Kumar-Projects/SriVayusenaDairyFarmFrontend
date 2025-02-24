@@ -64,10 +64,8 @@ const MilkRateDashboard = () => {
 		try {
 			dispatch(addAndUpdateMilkRates({ token, newRate }))
 				.then((res) => {
-					//console.log(res);
 				})
 				.finally(() => {
-					//console.log("Experiment completed");
 				});
 
 			toast({
@@ -77,7 +75,6 @@ const MilkRateDashboard = () => {
 				isClosable: true,
 			});
 		} catch (error) {
-			//console.log(error);
 			toast({
 				title: error.message,
 				status: "fail",
@@ -89,7 +86,6 @@ const MilkRateDashboard = () => {
 
 	const handleDelete = async (id) => {
 		try {
-			//console.log(id)
 			dispatch(deleteMilkRates({ token, id }));
 
 			toast({
@@ -99,7 +95,6 @@ const MilkRateDashboard = () => {
 				isClosable: true,
 			});
 		} catch (error) {
-			//console.log(error);
 			toast({
 				title: "Failed to delete milk rate",
 				status: "error",
@@ -158,28 +153,7 @@ const MilkRateDashboard = () => {
 			</Flex>
 
 			<Flex justifyContent="space-between" mb={5}>
-				<Select
-					placeholder="Filter by Category"
-					onChange={handleFilterChange}
-					maxW="200px"
-				>
-					<option value="all">All Categories</option>
-					<option value="cow">Cow</option>
-					<option value="buffalo">Buffalo</option>
-					<option value="sheep">Sheep</option>
-					<option value="goat">Goat</option>
-				</Select>
-
-				<Select
-					placeholder="Filter by Status"
-					onChange={handleSortChange}
-					maxW="200px"
-				>
-					<option value="All">All</option>
-					<option value="active">Active</option>
-					<option value="Non-Active">Non-Active</option>
-					<option value="category">Sort by Category</option>
-				</Select>
+				
 
 				<Button colorScheme="teal" onClick={handleAddNew}>
 					Add New Rate
@@ -222,26 +196,17 @@ const MilkRateDashboard = () => {
 									<Text fontWeight="bold" fontSize="lg">
 										{rate.milkCategory.toUpperCase()}
 									</Text>
-									<Text>Rate: ₹ {rate.ratePerFat}/Fat</Text>
-									{/* Highlight status based on active/inactive */}
-									{/* <Text color={rate.status ? "green.500" : "red.500"}>
-										Status: {rate.status ? "Active" : "Inactive"}
-									</Text> */}
+									<Text>Rate: ₹ {rate.ratePerFat}</Text>
 									<Text>Created At: {createdAt}</Text>
 									<Text>Updated At: {updatedAt}</Text>
 									<Flex justifyContent="space-between" mt={4}>
-										<Button
-											colorScheme="teal"
-											onClick={() => handleEditCard(rate)}
-										>
-											Edit
-										</Button>
+										
 										<Text
 											fontWeight="bold"
 											fontSize="md"
 											color={rate.status ? "green.600" : "red.600"}
 										>
-											{rate.status ? "Active" : "Inactive"}
+											{"Active"}
 										</Text>
 									</Flex>
 								</Box>

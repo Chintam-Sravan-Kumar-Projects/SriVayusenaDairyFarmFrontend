@@ -5,7 +5,7 @@ function Test() {
     startDate: '',
     endDate: '',
   });
-  console.log(dateValues)
+
 
   const handleDateChange = (event, dateType) => {
     const { value } = event.target;
@@ -13,7 +13,7 @@ function Test() {
       ...prevValues,
       [dateType]: value,
     }));
-    console.log(dateValues)
+
   };
   const style={color:"teal"}
 

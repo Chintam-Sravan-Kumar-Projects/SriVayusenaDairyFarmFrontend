@@ -34,7 +34,6 @@ const MilkRateModal = ({ isOpen, onClose, onSave, initialData }) => {
      
       milkCategory,
       ratePerFat,
-      status,
     });
     onClose();
   };
@@ -52,29 +51,17 @@ const MilkRateModal = ({ isOpen, onClose, onSave, initialData }) => {
             value={milkCategory}
             onChange={(e) => setMilkCategory(e.target.value)}
           >
-            <option value="cow">Cow</option>
-            <option value="buffalo">Buffalo</option>
-            <option value="sheep">Sheep</option>
-            <option value="goat">Goat</option>
+            <option value="Cow">Cow</option>
+            <option value="Buffalo">Buffalo</option>
           </Select>
 
           <Input
             mt={4}
-            placeholder="Rate per Fat (₹)"
+            placeholder="Rate (₹)"
             value={ratePerFat}
             onChange={(e) => setRatePerFat(e.target.value)}
           />
 
-          <Select
-            mt={4}
-            placeholder="Status"
-            defaultValue={'Inactive'}
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
-          >
-            <option value="Active">Active</option>
-            <option value="Inactive">Inactive</option>
-          </Select>
         </ModalBody>
         <ModalFooter>
           <Button colorScheme="blue" onClick={handleSave}>

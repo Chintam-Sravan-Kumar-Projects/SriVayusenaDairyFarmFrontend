@@ -12,10 +12,7 @@ import { useSelector } from 'react-redux';
 function App() {
   const [count, setCount] = useState(0)
   const {user,token} =useSelector((state)=>state.auth)
-  //console.log(user,token)
-  useEffect(()=>{
-    console.log("app render")
-  },[])
+
 
   return (
     <>

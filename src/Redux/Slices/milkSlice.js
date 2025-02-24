@@ -6,10 +6,8 @@ import { deleteMilkEntry, getmilkData, postMilkData, updateMilkEntry } from '../
 
 // Async thunk to get milk detail by user id;
 export const getMilkDetails = createAsyncThunk('milk/get', async ({token,value}, { rejectWithValue }) => {
-  //console.log("thunk token",token,value)
   try {
     const response = await getmilkData(token,value);
-   // console.log(response)
     return response;
   } catch (error) {
     return rejectWithValue(error.response.data);
@@ -19,11 +17,10 @@ export const getMilkDetails = createAsyncThunk('milk/get', async ({token,value},
 // Async thunk to add new milk entry in customer account.
 export const addMilk = createAsyncThunk('milk/add/post', async ({value,token }, { rejectWithValue }) => {
   try {
-    //console.log("add milk",value,token)
     const response = await postMilkData(value,token);
     return response;
   } catch (error) {
-    //console.log(error)
+
     return rejectWithValue(error.response.data);
   }
 });
@@ -34,11 +31,11 @@ export const addMilk = createAsyncThunk('milk/add/post', async ({value,token }, 
 // Async thunk to update a milk entry by id;
 export const updateExistingMilkEntry = createAsyncThunk('milk/update:id', async ({ id, payload, token }, { rejectWithValue }) => {
   try {
-    // console.log(id,text,token)
+
     const response = await updateMilkEntry(id, payload, token);
     return response;
   } catch (error) {
-    // console.log(error)
+
     return rejectWithValue(error.response.data);
   }
 });
@@ -66,7 +63,7 @@ export const deleteExistingMilkEntry = createAsyncThunk('stories/deleteExistingS
 
 // Initial state
 const initialState = {
-  data:null,
+  data:[],
   loading: false,
   error: null,
 };
@@ -84,14 +81,11 @@ export const milkSlice = createSlice({
         state.loading = true;
       })
       .addCase(getMilkDetails.fulfilled, (state, action) => {
-        //console.log(action)
         state.loading = false;
-        //console.log("case",action.payload)
         state.data = action.payload.data;
         toast.success('records loaded successfully!');
       })
       .addCase(getMilkDetails.rejected, (state, action) => {
-        //console.log(action)
         state.loading = false;
         state.error = action.payload;
         toast.error(action.payload.msg || 'Failed to load user milk details!');
@@ -103,7 +97,6 @@ export const milkSlice = createSlice({
       })
       .addCase(addMilk.fulfilled, (state, action) => {
         state.loading = false;
-        //console.log("payload",action);
         toast.success(`${action.payload.message}`||'milk data added successfully!');
       })
       .addCase(addMilk.rejected, (state, action) => {
@@ -135,7 +128,6 @@ export const milkSlice = createSlice({
         state.loading = true;
       })
       .addCase(updateExistingMilkEntry.fulfilled, (state, action) => {
-        //console.log(action)
         state.loading = false;
         state.data=state.data.map((entry)=>{
           if(entry._id==action.payload.data._id)
@@ -160,7 +152,6 @@ export const milkSlice = createSlice({
         state.loading = true;
       })
       .addCase(deleteExistingMilkEntry.fulfilled, (state, action) => {
-         //console.log(action)
         state.loading = false;
         state.data = state.data.filter((entry) => entry._id !== action.payload);
         toast.success('Entry deleted successfully!');

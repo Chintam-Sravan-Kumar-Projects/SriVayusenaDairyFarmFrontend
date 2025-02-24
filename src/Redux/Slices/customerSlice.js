@@ -60,7 +60,6 @@ export const customerSlice =createSlice({
         })
 
         .addCase(addcustomer.rejected , (state,action)=>{
-        //    console.log(action);
             state.loading=false;
             state.error=true;
             state.status=action.payload.error;
@@ -79,7 +78,6 @@ export const customerSlice =createSlice({
         .addCase(getcustomersDetails.fulfilled, (state,action)=>{
             state.loading=false;
             state.customerData=action.payload.customers;
-            //console.log(state.customerData)
             toast.success(action.payload.message || "fetched customers data")
         })
 

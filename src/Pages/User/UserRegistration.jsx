@@ -216,7 +216,7 @@ export default function UserRegistration({ onClose }) {
                   type="submit"
                   _hover={{ bg: "blue.500" }}
                 >
-                  {loading ? "Submitting..." : "Add Milk Provider"}
+                  {loading ? "Submitting..." : "Add Customer"}
                 </Button>
               </Stack>
             </Stack>

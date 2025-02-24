@@ -4,12 +4,16 @@ import { Route, Routes } from "react-router-dom";
 const Dashboard = lazy(() => import("../Pages/Dashboard"));
 import { NotFound } from "../Pages/NotFound";
 const UserRegistration = lazy(() => import("../Pages/User/UserRegistration"));
+const CowRegistration = lazy(() => import("../Pages/cow/cowRegistration"));
 const AdminRegistration = lazy(() =>
 	import("../Pages/Admin/AdminRegistration")
 );
 const MilkInfo = lazy(() => import("../Components/MilkInfo"));
 const UserDashboard = lazy(() =>
 	import("../Pages/User/UserTable/UserDashboard")
+);
+const CowDashboard = lazy(() =>
+	import("../Pages/cow/cowTable/cowDashboard")
 );
 const AdminLoginCard = lazy(() => import("../Pages/Admin/AdminLogin"));
 const Layout = lazy(() => import("../Pages/Layout/Layout"));
@@ -26,6 +30,18 @@ import MilkRateDashboard from "../Pages/Rate/MilkRateDashboard";
 const AddMilk = lazy(() => import("../Pages/Milk/AddMilk"));
 const MilkDashboard = lazy(() =>
 	import("../Pages/Milk/MilkTable/MilkDashboard")
+);
+const AddExpense = lazy(() => import("../Pages/expenses/AddExpense"));
+const ExpenseDashboard = lazy(() =>
+	import("../Pages/expenses/expensesTable/expensesDashboard")
+);
+const Addproducedmilk = lazy(() => import("../Pages/producedMilk/Addproducedmilk"));
+const ProducedmilkDashboard = lazy(() =>
+	import("../Pages/producedMilk/producedMilkTable/producedmilkDashboard")
+);
+const Addhealth = lazy(() => import("../Pages/health/Addhealth"));
+const HealthDashboard = lazy(() =>
+	import("../Pages/health/healthTable/healthDashboard")
 );
 
 export const MainRoutes = () => {
@@ -118,6 +134,38 @@ export const MainRoutes = () => {
 					/>
 
 					<Route
+						path="add_expense"
+						element={
+							<Suspense fallback={<Loader1 />}>
+								<PrivateRoute>
+									<AddExpense />
+								</PrivateRoute>
+							</Suspense>
+						}
+					/>
+
+					<Route
+						path="add_producedmilk"
+						element={
+							<Suspense fallback={<Loader1 />}>
+								<PrivateRoute>
+									<Addproducedmilk />
+								</PrivateRoute>
+							</Suspense>
+						}
+					/>
+					<Route
+						path="add_report"
+						element={
+							<Suspense fallback={<Loader1 />}>
+								<PrivateRoute>
+									<Addhealth />
+								</PrivateRoute>
+							</Suspense>
+						}
+					/>
+
+					<Route
 						path="add_user"
 						element={
 							<Suspense fallback={<Loader1 />}>
@@ -133,7 +181,39 @@ export const MainRoutes = () => {
 						element={
 							<Suspense fallback={<Loader1 />}>
 								<PrivateRoute>
+									
 									<MilkDashboard />
+								</PrivateRoute>
+							</Suspense>
+						}
+					/>
+					<Route
+						path="report_info"
+						element={
+							<Suspense fallback={<Loader1 />}>
+								<PrivateRoute>
+									<HealthDashboard />
+								</PrivateRoute>
+							</Suspense>
+						}
+					/>
+					<Route
+						path="expense"
+						element={
+							<Suspense fallback={<Loader1 />}>
+								<PrivateRoute>
+									<ExpenseDashboard />
+								</PrivateRoute>
+							</Suspense>
+						}
+					/>
+
+					<Route
+						path="producedmilk_info"
+						element={
+							<Suspense fallback={<Loader1 />}>
+								<PrivateRoute>
+									<ProducedmilkDashboard />
 								</PrivateRoute>
 							</Suspense>
 						}
@@ -159,6 +239,27 @@ export const MainRoutes = () => {
 								</Suspense>
 							}
 						/>
+					<Route
+						path="cow_dashboard"
+						element={
+							<Suspense fallback={<Loader1 />}>
+								<PrivateRoute>
+									<CowDashboard/>
+								</PrivateRoute>
+							</Suspense>
+						}
+					/>
+				<Route
+						path="add_cow"
+						element={
+							<Suspense fallback={<Loader1 />}>
+								<PrivateRoute>
+									<CowRegistration />
+								</PrivateRoute>
+							</Suspense>
+						}
+					/>
+
 				</Route>
 				
 				<Route

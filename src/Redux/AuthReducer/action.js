@@ -21,40 +21,33 @@ export const signupRequestAction = () => {
 };
 
 export const signupSuccessAction = (payload) => {
-  //console.log(payload);
   return { type: types.USER_SIGNUP_SUCCESS, payload };
 };
 
 export const signupFailureAction = (payload) => {
-   console.log(payload);
   return { type: types.USER_SIGNUP_FAILURE ,payload};
 };
 
 
 // send message
 export const sendMessageSuccessAction = (payload) => {
-  console.log(payload);
   return { type: types.USER_MESSAGE_SUCCESS, payload };
 };
 
 export const sendMessageFailureAction = () => {
-  // console.log(payload);
   return { type: types.USER_MESSAGE_FAILURE };
 };
 
 
 //loginout 
 export const logoutRequestAction = () => {
-  // console.log(payload);
   return { type: types.USER_LOGOUT_REQUEST, };
 };
 export const logoutSuccessAction = () => {
-  // console.log(payload);
   return { type: types.USER_LOGOUT_SUCCESS, };
 };
 
 export const logoutFailureAction = (payload) => {
-  // console.log(payload);
   return { type: types.USER_LOGOUT_FAILURE, payload};
 };
 
@@ -78,7 +71,6 @@ export const getCurrentUserFailureAction =() =>{
 
 // admin login function
 export const signin = (payload) => async (dispatch) => {
-  //console.log("action payload", payload);
   dispatch(signinRequestAction());
   return await axios
     .post(`${url2}/admin/login`, payload)
@@ -87,19 +79,16 @@ export const signin = (payload) => async (dispatch) => {
 
 //admin register function
 export const signup = (payload) => async (dispatch) => {
-  console.log("action", payload);
   dispatch(signupRequestAction());
   try {
     return await axios
       .post(`${url2}/admin/register`, payload)
       .then((res) => {
-       console.log("action", res);
         dispatch(signupSuccessAction(res));
       })
       
   }catch (error) {
     dispatch(signupFailureAction(error));
-    console.log(error)
   }
 };
 
@@ -109,7 +98,6 @@ export const signup = (payload) => async (dispatch) => {
 export const currentUser =(token) =>async(dispatch) =>{
   
   dispatch(getCurrentUserRequestAction())
-  console.log("token current user",token)
   try {
      let res=await axios.get(`${url2}/admin/me`,
       {
@@ -118,11 +106,9 @@ export const currentUser =(token) =>async(dispatch) =>{
         },
       })
 
-      console.log(res.data);
       dispatch(getCurrentUserSuccessAction(res.data))
   } catch (error) {
     dispatch(getCurrentUserFailureAction())
-    console.log(error.response)
   }
 }
 
@@ -146,7 +132,6 @@ export const logout =() =>async (dispatch) =>{
 
 // send message
 export const sendMail = (payload) => async (dispatch) => {
-  //console.log("action", payload);
   dispatch(signinRequestAction());
   try {
     return await axios

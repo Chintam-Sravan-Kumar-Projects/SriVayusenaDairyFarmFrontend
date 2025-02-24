@@ -50,9 +50,7 @@ export default function AdminRegistration() {
 		confirmPassword: "",
 	});
 	const {user,token, loading,error} = useSelector((state) => state.auth);
-  //console.log(isLoading,isError,isRegistered,)
  
-
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
@@ -125,7 +123,6 @@ export default function AdminRegistration() {
 				if(res.payload.user)
 				{
 					
-					console.log("going to towards dashboard")
 					navigate("/dashboard")
 				}
 				else{

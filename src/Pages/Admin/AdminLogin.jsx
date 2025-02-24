@@ -98,7 +98,7 @@ export default function AdminLoginCard() {
 						<form onSubmit={loginHandler}>
 							<Stack spacing={4} w={"full"} maxW={"md"}>
 								<Heading fontSize={"2xl"}>Sign in to your account</Heading>
-								<FormControl id="phone">
+								<FormControl id="phone" isRequired>
 									<FormLabel>Phone number</FormLabel>
 									<Input
 										autoCapitalize=""
@@ -139,8 +139,6 @@ export default function AdminLoginCard() {
 										align={"start"}
 										justify={"space-between"}
 									>
-										<Checkbox>Remember me</Checkbox>
-										<Link color={"blue.500"}>Forgot password?</Link>
 									</Stack>
 									<Button colorScheme={"blue"} variant={"solid"} type="submit">
 										Sign in

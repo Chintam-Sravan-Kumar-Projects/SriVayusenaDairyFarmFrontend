@@ -1,0 +1,9 @@
+export const COW_USER_REQUEST = "COW_USER_REQUEST";
+export const COW_USER_SUCCESS = "COW_USER_SUCCESS";
+export const COW_USER_FAILURE = "COW_USER_FAILURE";
+
+
+export const GET_COW_REQUEST = "GET_COW_REQUEST";
+export const GET_COW_SUCCESS = "GET_COW_SUCCESS";
+export const GET_COW_FAILURE = "GET_COW_FAILURE";
+

@@ -34,7 +34,8 @@ import { EditIcon } from "./EditIcon";
 import { EyeIcon } from "./EyeIcon";
 import Model from "./Model";
 import { useDispatch, useSelector } from "react-redux";
-import { getcustomersDetails } from "../../../Redux/userReducer/action";
+import { getcustomersDetails } from "../../../Redux/UserReducer/action";
+
 import Selectcustomer from "../../Milk/Selectcustomer";
 import { getMilkDetails } from "../../../Redux/MilkReducer/action";
 import { useToast } from '@chakra-ui/react'
@@ -54,14 +55,14 @@ const statusColorMap = {
   vacation: "warning",
 };
 
-const INITIAL_VISIBLE_COLUMNS = ["name", "role", "status", "actions"];
+const INITIAL_VISIBLE_COLUMNS = ["name", "email","mobile","village","gender", "actions"];
 
 export default function UserDashboard() {
-  const { customerData, loading, error,status } = useSelector((state) => state.customer);
+  const { customerData } = useSelector((state) => state.customer);
+
   const {token,user}=useSelector((state)=>state.auth);
   const dispatch = useDispatch();
 
-  //console.log("user data Dashboard", customerData, loading, error);
   let users =customerData || [];
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
@@ -81,9 +82,7 @@ export default function UserDashboard() {
   const [showDetails, setShowDetails] = React.useState(false);
   
   const handleDelete = (item) => {
-    //console.log('Deleted customer id:', item);
     const id=item._id;
-     //console.log('Item deleted',id,token);
     dispatch(DeletecustomerAccount({id,token}))
     
   };
@@ -188,20 +187,7 @@ export default function UserDashboard() {
                 </Button>
               </DropdownTrigger>
               <DropdownMenu>
-                <DropdownItem>
-                  <Tooltip content="View">
-                    <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                      <EyeIcon />
-                    </span>
-                  </Tooltip>
-                </DropdownItem>
-                <DropdownItem>
-                  <Tooltip content="Edit user">
-                    <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                      <EditIcon />
-                    </span>
-                  </Tooltip>
-                </DropdownItem>
+                
                 <DropdownItem>
                   <div  onClick={() => openDeleteModal(user)}>
                   <Tooltip color="danger" content="Delete user">
@@ -273,30 +259,6 @@ export default function UserDashboard() {
                   endContent={<ChevronDownIcon className="text-small" />}
                   variant="flat"
                 >
-                  Status
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                disallowEmptySelection
-                aria-label="Table Columns"
-                closeOnSelect={false}
-                selectedKeys={statusFilter}
-                selectionMode="multiple"
-                onSelectionChange={setStatusFilter}
-              >
-                {statusOptions.map((status) => (
-                  <DropdownItem key={status.uid} className="capitalize">
-                    {capitalize(status.name)}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
-            <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
-                <Button
-                  endContent={<ChevronDownIcon className="text-small" />}
-                  variant="flat"
-                >
                   Columns
                 </Button>
               </DropdownTrigger>
@@ -350,9 +312,12 @@ export default function UserDashboard() {
     onRowsPerPageChange,
     users.length,
     onSearchChange,
+    users,
+    customerData,
+    sortedItems,
     hasSearchFilter,
   ]);
-
+  console.log(customerData)
   const bottomContent = React.useMemo(() => {
     return (
       <div className="py-2 px-2 flex justify-between items-center">
@@ -392,16 +357,11 @@ export default function UserDashboard() {
     );
   }, [selectedKeys, items.length, page, pages, hasSearchFilter]);
 
-  const getdata = () => {
-    dispatch(getcustomersDetails({token}));
-   
-  };
-
-
   useEffect(() => {
-    getdata();
-    
-  }, []);
+    console.log("Dispatching getcustomersDetails with token:", token);
+    dispatch(getcustomersDetails({ token }));
+  }, [dispatch, token]);
+  
 
   return (
     <>

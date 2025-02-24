@@ -36,6 +36,7 @@ const translations = {
 		totalWeight: "Total Weight",
 		avgRatePerLiter: "Avg. Rate/Liter",
 		totalAmount: "Total Amount",
+		category:"Category"
 	},
 	mr: {
 		date: "తేదీ",
@@ -46,6 +47,7 @@ const translations = {
 		totalWeight: "మొత్తం బరువు",
 		avgRatePerLiter: "లీటరుకు సగటు రేటు",
 		totalAmount: "మొత్తం డబులు",
+		category:'వర్గం',
 		morning:'ఉదయం',
 		"evening":'సాయంత్రం',
 	},
@@ -139,7 +141,7 @@ const MilkReportModal = ({ reportData, dateValues }) => {
 		doc.text("Milk Collection Management with Sri Vayusena Dairy Farm", 300, 65, { align: "center",fontSize:12 });
 
 		doc.setFontSize(16);
-		doc.text(`${reportData[0].adminId.shopName}`, 300, 90, { align: "center"});
+		//doc.text(`${reportData[0].adminId.shopName}`, 300, 90, { align: "center"});
 
 		// Add customer and admin information
 		doc.setFontSize(12);
@@ -169,6 +171,7 @@ const MilkReportModal = ({ reportData, dateValues }) => {
 				[
 					"Date",
 					"Session",
+					"Category",
 					"Rate/Liter",
 					"Weight / Li",
 					"Total Amount / ₹ ",
@@ -177,6 +180,7 @@ const MilkReportModal = ({ reportData, dateValues }) => {
 			body: reportData.map((item) => [
 				item.date,
 				item.shift,
+				item.category,
 				item.rate,
 				item.litter,
 				` ${item.calculatedAmount}`,
@@ -313,9 +317,10 @@ const MilkReportModal = ({ reportData, dateValues }) => {
 									<Tr>
 										<Th>{translations[language].date}</Th>
 										<Th>{translations[language].session}</Th>
+										<Th>{translations[language].category}</Th>
 										<Th>{translations[language].ratePerLiter}</Th>
 										<Th>{translations[language].weight}</Th>
-										<Th>{translations[language].totalAmount} ₹ </Th>
+										<Th>₹ {translations[language].totalAmount}</Th>
 									</Tr>
 								</Thead>
 								<Tbody>
@@ -323,6 +328,7 @@ const MilkReportModal = ({ reportData, dateValues }) => {
 										<Tr key={index}>
 											<Td>{item.date || "N/A"}</Td>
 											<Td>{language=="en"?item.shift:item.shift=='morning'?'ఉదయం':'సాయంత్రం' || "N/A"}</Td>
+											<Td>{item.category }</Td>
 											<Td>{item.rate }</Td>
 											<Td>{item.litter}</Td>
 											<Td>{language=='en'?`Rs: ${item.calculatedAmount}`: `${item.calculatedAmount} రూపాయి` || "N/A"} </Td>
@@ -354,7 +360,7 @@ const MilkReportModal = ({ reportData, dateValues }) => {
 									</Tr>
 									<Tr>
 										<Td>{translations[language].totalAmount}</Td>
-										<Td>{sumAmount} ₹</Td>
+										<Td>₹ {sumAmount}</Td>
 									</Tr>
 								</Tbody>
 							</Table>

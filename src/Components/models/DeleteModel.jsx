@@ -17,8 +17,7 @@ export const DeleteConfirmationModal = ({
 	item,
 }) => {
   
-	//console.log("model open item,close,delete",item,isOpen,onClose,onDelete)
-	//console.log(item);
+	
 	// The original date string in UTC
 	const utcDateStr = item?.createdAt && item ? item.createdAt : undefined;
 	const dateObj = new Date(utcDateStr);
@@ -39,12 +38,8 @@ export const DeleteConfirmationModal = ({
 					<Text>
 						<ul type="none">
 							<li>
-								Are you sure you want to delete the{" "}
-								<b>{item?.farmerId?.name || item?.name}</b>
-								{item && item?.date
-									? ` farmer Milk Entery ? `
-									: "Farmer Account ..?"}{" "}
-								<br />
+								Are you sure you want to delete
+								
 							</li>
 							<li>Entry date : {item?.date ? item.date : localDateStr}</li>
 							<li>

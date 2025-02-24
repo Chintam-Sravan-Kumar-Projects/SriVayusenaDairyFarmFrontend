@@ -83,7 +83,7 @@ const MoreInfoModal = ({ isOpen, onClose, details, onUpdate ,mode}) => {
 
   const handleUpdateClick = () => {
     setIsEditing(false);
-    //console.log(editableDetails)
+    
     const id=editableDetails.id;
     const payload=editableDetails;
     dispatch(updateExistingMilkEntry({id,payload,token})).then(()=>{
@@ -119,8 +119,8 @@ const MoreInfoModal = ({ isOpen, onClose, details, onUpdate ,mode}) => {
                         onChange={handleCategoryChange}
                       >
                         <Stack spacing={4} direction="row">
-                          {/* <Radio value="cow">Cow</Radio> */}
-                          <Radio value="buffalo">Buffalo</Radio>
+                          <Radio value="Cow">Cow</Radio>
+                          <Radio value="Buffalo">Buffalo</Radio>
                           {/* <Radio value="sheep">Sheep</Radio>
                           <Radio value="goat">Goat</Radio> */}
                         </Stack>

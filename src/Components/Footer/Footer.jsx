@@ -44,6 +44,17 @@ export default function Footer() {
                                     >
                                         Github
                                     </a>
+                                    
+                                </li>
+                                <li>
+                                <a
+                                        href="https://www.linkedin.com/in/chintam-sravan-kumar-ab81a021b/"
+                                        className="hover:underline"
+                                        target="_blank"
+                                        rel="noreferrer"
+                                    >
+                                        Linkdin
+                                    </a>
                                 </li>
                                 
                             </ul>

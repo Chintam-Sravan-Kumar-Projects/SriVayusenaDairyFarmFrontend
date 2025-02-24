@@ -6,7 +6,6 @@ import { toast } from "react-toastify";
 export const getMilkRates = createAsyncThunk(
 	"get/rates",
 	async ({ token }, { rejectWithValue }) => {
-		//console.log(token);
 		try {
 			const response = await getRates(token);
 			return response;
@@ -22,7 +21,6 @@ export const addAndUpdateMilkRates = createAsyncThunk(
 	"post/rates",
 	async ({ token, newRate }, { rejctWithValue }) => {
 		try {
-			//console.log(token, newRate);
 			const response = await postRates(token, newRate);
 			return response;
 		} catch (error) {
@@ -36,7 +34,6 @@ export const deleteMilkRates = createAsyncThunk(
 	"delete/rate",
 	async ({ token, id }, { rejctWithValue }) => {
 		try {
-			//console.log(token, id);
 			const response = await deleteRates(token, id);
 			return response;
 		} catch (error) {
@@ -63,7 +60,6 @@ export const rateSlice = createSlice({
 			})
 
 			.addCase(getMilkRates.fulfilled, (state, action) => {
-				//console.log(action);
 				state.loading = false;
 				state.rates = action.payload.rates;
 				toast.success(action.payload.message || "fetch rates data");
@@ -80,8 +76,6 @@ export const rateSlice = createSlice({
 			})
 
 			.addCase(addAndUpdateMilkRates.fulfilled, (state, action) => {
-				//console.log(action);
-				
 
 				state.loading = false;
 				const updatedRate = action.payload.rate;
@@ -101,7 +95,6 @@ export const rateSlice = createSlice({
 				toast.success(action.payload.message || "rate updated");
 			})
 			.addCase(addAndUpdateMilkRates.rejected, (state, action) => {
-				//console.log(action);
 				state.loading = false;
 				state.error = true;
 				toast.error("Something wen't wrong");
@@ -113,7 +106,6 @@ export const rateSlice = createSlice({
 				state.loading = true;
 			})
 			.addCase(deleteMilkRates.fulfilled, (state, action) => {
-				//console.log(action)
 				state.loading = false;
 				state.rates = state.rates.filter(
 					(item) => item._id !== action.payload.rate._id

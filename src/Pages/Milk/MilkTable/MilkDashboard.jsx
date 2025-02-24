@@ -23,7 +23,7 @@ import { PlusIcon } from "../../User/UserTable/PlusIcon";
 import { VerticalDotsIcon } from "../../User/UserTable/VerticalDotsIcon";
 import { SearchIcon } from "../../User/UserTable/SearchIcon";
 import { ChevronDownIcon } from "../../User/UserTable//ChevronDownIcon";
-import { columns, statusOptions } from "../../User/UserTable/data";
+import { columns, statusOptions } from "./data.js";
 import { capitalize } from "../../User/UserTable/utils";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -39,6 +39,7 @@ import { toast } from "react-toastify";
 import MoreInfoModal from "../../../Components/models/MoreInfoModel";
 import { DeleteConfirmationModal } from "../../../Components/models/DeleteModel";
 import MilkReportModal from "./ReportGenerator";
+import { getcustomersDetails } from "../../../Redux/Slices/customerSlice";
 
 const statusColorMap = {
 	active: "success",
@@ -49,8 +50,7 @@ const statusColorMap = {
 const INITIAL_VISIBLE_COLUMNS = [
 	"date",
 	"shift",
-	"fat",
-	"snf",
+	"category",
 	"litter",
 	"actions",
 	"rate",
@@ -62,12 +62,12 @@ function MilkDashboard() {
 	const { data, loading, error } = useSelector((state) => state.milk);
 	const { token, user } = useSelector((state) => state.auth);
 	const { customerData } = useSelector((state) => state.customer);
-  //console.log("milk data",data,loading,error,user,customerData)
 	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(getcustomersDetails(token));
+	  }, [dispatch, token]);
+	
 	const users = data == null ? [] : data;
-
-	// console.log("milkdash", users);
-	//console.log("milk data", data,"users data", customerData);
 
 	const [filterValue, setFilterValue] = React.useState("");
 	const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
@@ -108,7 +108,6 @@ function MilkDashboard() {
 
 	const handleView = (item) => {
 		setViewDetails(item);
-		//console.log(item);
 		openModal();
 	};
 	const openModal = () => {
@@ -124,7 +123,6 @@ function MilkDashboard() {
 	const handleDeleteEntry = (item) => {
 		
 		const id = item._id;
-		console.log("Item deleted");
 		dispatch(deleteExistingMilkEntry({ id, token }));
 	};
 	const openDeleteModal = (item) => {
@@ -209,56 +207,21 @@ function MilkDashboard() {
 				return sortDescriptor.direction === "descending" ? -cmp : cmp;
 			})
 			.filter((item) => {
-				const createdDateObj = new Date(item.createdAt).toLocaleDateString(
-					"en-IN",
-					{
-						day: "2-digit",
-						month: "2-digit",
-						year: "numeric",
-						hour: "2-digit",
-						minute: "2-digit",
-						second: "2-digit",
-						hour12: true, // Use true for 12-hour format with AM/PM
-					}
-				);
-				// .toISOString()
-				// .split("T")[0];
-				// const createdDateObj = new Date(createdDate);
-				const startDateObj = new Date(dateValues.startDate).toLocaleDateString(
-					"en-IN",
-					{
-						day: "2-digit",
-						month: "2-digit",
-						year: "numeric",
-						hour: "2-digit",
-						minute: "2-digit",
-						second: "2-digit",
-						hour12: true, // Use true for 12-hour format with AM/PM
-					}
-				);
-				const endDateObj = new Date(dateValues.endDate).toLocaleDateString(
-					"en-IN",
-					{
-						day: "2-digit",
-						month: "2-digit",
-						year: "numeric",
-						hour: "2-digit",
-						minute: "2-digit",
-						second: "2-digit",
-						hour12: true, // Use true for 12-hour format with AM/PM
-					}
-				);
+				const createdDateObj = item.date
+				
+				
+				let start = parseInt(dateValues.startDate.split('-').join(''));
+				let end = parseInt(dateValues.endDate.split('-').join(''));
+				let createddate = parseInt(createdDateObj.slice(0, 10).split('/').reverse().join(''));
 
-				if (
-					dateValues.startDate !== "" &&
-					dateValues.endDate !== "" &&
-					createdDateObj >= startDateObj &&
-					createdDateObj <= endDateObj
-				) {
-					return item;
-				} else if (dateValues.startDate == "" || dateValues.endDate == "") {
-					return item;
+				if (dateValues.startDate !== "" && dateValues.endDate !== "") {
+					if (createddate >= start && createddate <= end) {
+						return item
+					}
+				} else {
+					return item
 				}
+
 			});
 	}, [sortDescriptor, items, dateValues]);
 
@@ -274,7 +237,6 @@ function MilkDashboard() {
 
 	const renderCell = React.useCallback((user, columnKey) => {
 		const cellValue = user[columnKey];
-
 		switch (columnKey) {
 			case "name":
 				return (
@@ -391,59 +353,19 @@ function MilkDashboard() {
       sumAmount,
       totalEntries,
     }];
-		// if () {
-		// 	stats.forEach((item) => {
-		// 		totalFat += item.fat;
-		// 		totalSnf += item.snf;
-		// 		totalDegree += item.degree;
-		// 		totalWater += item.water;
-		// 		totalLitters += item.litter;
-		// 	});
-
-			// let totalStats = {
-			// 	fat: roundUpToDecimalPlaces(totalFat / tItems, 2),
-			// 	snf: roundUpToDecimalPlaces(totalSnf / tItems, 2),
-			// 	degree: roundUpToDecimalPlaces(totalDegree / tItems, 2),
-			// 	water: roundUpToDecimalPlaces(totalWater / tItems, 2),
-			// 	totalLitters: roundUpToDecimalPlaces(totalLitters, 4),
-			// 	totalEntries: tItems,
-			// };
-			// return [totalStats];
-		// } else {
-		// 	
-	
-
-		//round up function
-		 function roundUpToDecimalPlaces(number, decimalPlaces) {
-			const multiplier = Math.pow(10, decimalPlaces);
-			return Math.floor(number * multiplier) / multiplier;
-		}
 	}, [dateValues, sortedItems]);
-
- // console.log("Sorted data",sortedItems,dateValues)
 	const topContent = React.useMemo(() => {
 		return (
 			<>
 				<div className="flex={['column', 'column', 'row']} gap-4 ">
 					<div className="flex justify-between gap-4 items-end  flex={['row', 'column', 'column']}">
-                {/* <Input
-                isClearable
-                className="w-full sm:max-w-[44%]"
-                placeholder="Search by name..."
-                startContent={<SearchIcon />}
-                value={filterValue}
-                onClear={() => onClear()}
-                onValueChange={onSearchChange}
-              /> */}
-
-              {/* filter by date  */}
-               {/* left side buttons */}
+                
               <div className="flex justify-between gap-2 items-end">
                 <Input
                   size="sm"
                   name="startDate"
-                  min={minDate}
-                  max={new Date().toISOString().split("T")[0]}
+                  //min={minDate}
+                  //max={new Date().toISOString().split("T")[0]}
                   type="date"
                   value={dateValues.startDate}
                   onChange={(e) => handleDateChange(e, "startDate")}
@@ -456,8 +378,7 @@ function MilkDashboard() {
                 <Input
                   size="sm"
                   name="endDate"
-                  min={minDate}
-                //   max={new Date().toISOString().split("T")[0]}
+                  //min={minDate}
                   type="date"
                   value={dateValues.endDate}
                   onChange={(e) => handleDateChange(e, "endDate")}
@@ -546,16 +467,6 @@ function MilkDashboard() {
 						)}
 
 						<label className="flex items-center text-default-400 text-small">
-							{/* Rows per page:
-            <select
-              className="bg-transparent outline-none text-default-400 text-small"
-              onChange={() => onRowsPerPageChange}
-            >
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="15">15</option>
-              <option value="15">20</option>
-            </select> */}
 						</label>
 					</div>
 				</div>
@@ -570,6 +481,7 @@ function MilkDashboard() {
 		onSearchChange,
 		hasSearchFilter,
 		dateValues,
+		customerData,
 	]);
   
 	const bottomContent = React.useMemo(() => {
@@ -612,9 +524,7 @@ function MilkDashboard() {
 	}, [selectedKeys, items.length, page, pages, hasSearchFilter]);
 
 	
-	useEffect(() => {
-		console.log("milk dash render");
-	}, [token]);
+
 	return (
 		<>
 			{
@@ -697,7 +607,7 @@ function MilkDashboard() {
 				{customerData.length ? (
 					<Table aria-label=" static collection table">
 						<TableHeader>
-							<TableColumn>Total & Avg</TableColumn>
+							<TableColumn>Customer Name</TableColumn>
 							<TableColumn>Total Entries</TableColumn>
 							{/* <TableColumn>Avg FAT</TableColumn>
 							<TableColumn>Avg SNF</TableColumn>
@@ -719,7 +629,7 @@ function MilkDashboard() {
 									<TableCell>{items.snf || 0}</TableCell>
 									<TableCell>{items.degree || 0} %</TableCell> */}
 									<TableCell>{items.totalLitters || 0} Li</TableCell>
-                  <TableCell>{items.sumAmount || 0} ₹</TableCell>
+                  <TableCell>₹ {items.sumAmount || 0}</TableCell>
 								</TableRow>
 							)}
 						</TableBody>

@@ -20,7 +20,7 @@ export default function Header() {
   const { token, user,loading,error } = useSelector((state) => state.auth);
   const [language,setLangauge] =useState('en')
    const { t,i18n } = useTranslation();
-  //console.log("auth header", token, user,loading,error);
+  
   const dispatch = useDispatch();
   const navigate=useNavigate();
 
@@ -28,7 +28,6 @@ export default function Header() {
  
   
     const changeLanguage = (lag) => {
-console.log("langguage changed")
 
       i18n.changeLanguage(lagn);
     };
@@ -63,13 +62,13 @@ console.log("langguage changed")
         .then((res)=>{
           if(res.payload.admin)
           {
-            console.log("going to dashboard")
+            
             navigate("/dashboard")
           }
           
          
         })
-        console.log("login auto")
+
       }
   },[user,token])
  

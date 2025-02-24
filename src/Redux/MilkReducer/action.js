@@ -31,7 +31,6 @@ export const getMilkFailureAction = (payload) => {
 //================function for api request =====================
 
 export const addMilk =({ value, token }) =>async (dispatch) => {
-    //console.log("action milk payload", value, token);
 
     dispatch(addMilkRequestAction());
     return await axios
@@ -42,14 +41,12 @@ export const addMilk =({ value, token }) =>async (dispatch) => {
       })
 
       .catch((res) => {
-       // console.log("add milk err", res.data);
         dispatch(addMilkFailureAction(res.data));
       });
   };
 
 //get milk data
 export const getMilkDetails =({ value, token }) =>async (dispatch) => {
-    //console.log("get milk action payload", value,token);
 
     dispatch(getMilkRequestAction());
     await axios
@@ -60,11 +57,9 @@ export const getMilkDetails =({ value, token }) =>async (dispatch) => {
         }
       })
       .then((res) => {
-       // console.log("action get milk data res", res.data);
         dispatch(getMilkSuccessAction(res.data));
       })
       .catch((res) => {
-        //console.log("get milk err", res.data);
         dispatch(getMilkFailureAction(res.data));
       });
   };

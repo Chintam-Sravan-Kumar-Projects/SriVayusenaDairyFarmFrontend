@@ -12,7 +12,6 @@ import logo from "../../assets/Logo/logo.png"
 export default function Contact() {
   const toast = useToast();
   const data = useSelector((store) => store.authReducer);
-  //console.log("auth reducer", data);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const inputRefs = useRef({
@@ -30,16 +29,16 @@ export default function Contact() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    //console.log(formData);
+   
 
     //send data to the server
     dispatch(sendMail(formData))
       .then((res) => {
-        //console.log("action", res);
+        
         dispatch(sendMessageSuccessAction(res.status));
       })
       .then((res) => {
-        //console.log("admin reg response", res);
+        
           toast({
             position: "top",
             title: `201 Message confirmation`,
@@ -62,7 +61,7 @@ export default function Contact() {
         
       })
       .catch((res) => {
-        //console.log("action catch", res);
+       
         dispatch(sendMessageFailureAction());
         toast({
             position: "top",

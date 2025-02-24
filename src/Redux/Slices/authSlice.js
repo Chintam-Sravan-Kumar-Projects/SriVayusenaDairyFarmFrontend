@@ -14,9 +14,6 @@ export const register = createAsyncThunk(
 		try {
 			return await registerUser(userData);
 		} catch (error) {
-			//console.log("slice error", error);
-			//toast.error(`${error.response.data.status} ${error.response.data.message}`)
-
 			return rejectWithValue(error.response.data);
 		}
 	}
@@ -28,7 +25,6 @@ export const login = createAsyncThunk(
 		try {
 			return await loginUser(userData);
 		} catch (error) {
-			//console.log(error);
 			return rejectWithValue(error);
 		}
 	}
@@ -40,7 +36,6 @@ export const existingUser = createAsyncThunk(
 		try {
 			return currentUser(token);
 		} catch (error) {
-			//console.log(error);
 			return rejectWithValue(error.response.data);
 		}
 	}
@@ -52,7 +47,6 @@ export const logout = createAsyncThunk(
 		try {
 			return await logoutUser(token);
 		} catch (error) {
-			//console.log("logout", error);
 			return rejectWithValue(error.response.data);
 		}
 	}
@@ -100,7 +94,6 @@ export const authSlice = createSlice({
 				state.loading = true;
 			})
 			.addCase(login.fulfilled, (state, action) => {
-        //console.log(action)
 				state.loading = false;
 				state.user = action.payload.admin;
 				state.token = action.payload.token;
@@ -109,7 +102,6 @@ export const authSlice = createSlice({
         toast.info(`Welcome back, ${action.payload.admin.name}`)
 			})
 			.addCase(login.rejected, (state, action) => {
-        //console.log(action)
 				state.loading = false;
 				state.error = true;
 				toast.error(`${action.payload?.message} ` || "Login failed!" || `${action.error}`);
@@ -146,9 +138,7 @@ export const authSlice = createSlice({
 
 			.addCase(existingUser.rejected, (state, action) => {
 				state.pending = false;
-        		//console.log(action)
 				state.error = action.payload;
-				//console.log("action",action);
 				toast.success("Thanks for choosing Sri Vayusena Dairy Farm");
 			});
 	},
