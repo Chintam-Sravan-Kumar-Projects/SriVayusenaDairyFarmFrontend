@@ -63,7 +63,7 @@ export const getcustomersDetails = ({ token }) => async (dispatch) => {
       },
     });
     // Check for error in response data if present
-    console.log(response.data);
+
     if (response.data.err) {
       dispatch(getUserFailureAction(response.data.err));
     } else {
