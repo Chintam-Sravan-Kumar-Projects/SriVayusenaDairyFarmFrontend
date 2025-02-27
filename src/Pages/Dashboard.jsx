@@ -43,8 +43,8 @@ const LinkItems = [
     icon: FiHome,
     children: [
       { id: "1-1", name: "Sell Milk", icon: FiHome, path: "/dashboard/add_milk" },
-      { id: "1-2", name: "Customers", icon: FaRegAddressCard, path: "/dashboard/user_dashboard" },
-      { id: "1-3", name: "Sold Milk Stats", icon: FiTrendingUp, path: "/dashboard/milk_info" },
+      { id: "1-2", name: "Sold Milk Stats", icon: FiTrendingUp, path: "/dashboard/milk_info" },
+      { id: "1-3", name: "Customers", icon: FaRegAddressCard, path: "/dashboard/user_dashboard" },
       { id: "1-4", name: "Settings", icon: FiSettings, path: "/dashboard/rate" },
     ],
   },
