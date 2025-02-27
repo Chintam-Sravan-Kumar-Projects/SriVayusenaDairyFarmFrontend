@@ -194,7 +194,7 @@ function MilkDashboard() {
 	const items = React.useMemo(() => {
 		const start = (page - 1) * rowsPerPage;
 		const end = start + rowsPerPage;
-		return filteredItems.slice(start, end);
+		return filteredItems;
 	}, [page, filteredItems, rowsPerPage]);
 
 	const sortedItems = React.useMemo(() => {
